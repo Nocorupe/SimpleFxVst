@@ -55,7 +55,7 @@ struct RingBuffer
 
 		//_data[ (_forward + i)% _size ] = input[i];
 		//}
-		int back_size = std::min<int>(data_size, _size - _forward);
+		int back_size = std::min<int>((int)data_size, _size - _forward);
 		int front_size = std::max<int>(((_forward + (int)data_size) - _size) % (_size), 0);
 		memcpy(_data.data() + _forward, input, sizeof(float) * back_size);
 		memcpy(_data.data(), input + back_size, sizeof(float) * front_size);

@@ -37,7 +37,7 @@ public :
 		std::string name(aName);
 		for (std::size_t i = 0; i < mPrograms.size(); i++) {
 			if (name == std::get<0>(mPrograms[i])) {
-				setProgram(i);
+				setProgram((int)i);
 				return;
 			}
 		}

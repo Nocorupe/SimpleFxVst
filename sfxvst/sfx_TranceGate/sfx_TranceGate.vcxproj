@@ -163,6 +163,7 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\common\SfxExp2xParamProperties.h" />
     <ClInclude Include="sfx_TranceGate.h" />
   </ItemGroup>
   <ItemGroup>

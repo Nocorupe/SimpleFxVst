@@ -26,6 +26,9 @@
     <ClInclude Include="sfx_TranceGate.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\SfxExp2xParamProperties.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vstplug.def">
