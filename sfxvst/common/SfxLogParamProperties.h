@@ -25,7 +25,7 @@ public:
 		vst_strncpy(aText, ss.str().data(), kVstMaxNameLen);
 	}
 
-	virtual int getDisplayValue() {
+	virtual float getDisplayValue() {
 		return (float)MinValue + ((std::powf(10.0f, mVal) - 1.0f) / 9.0f) * (float)(MaxValue-MinValue);
 	}
 

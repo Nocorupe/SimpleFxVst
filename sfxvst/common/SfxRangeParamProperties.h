@@ -25,7 +25,7 @@ public:
 		vst_strncpy(aText, ss.str().data(), kVstMaxNameLen);
 	}
 
-	virtual int getDisplayValue() {
+	virtual float getDisplayValue() {
 		return (float)MinValue + mVal * (float)(MaxValue - MinValue);
 	}
 
