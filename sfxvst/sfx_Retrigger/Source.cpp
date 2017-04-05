@@ -4,6 +4,6 @@
 
 #include <audioeffectx.cpp>
 
-#include "SfxFlanger.cpp"
+#include "SfxRetrigger.cpp"
 
 #include <vstplugmain.cpp>

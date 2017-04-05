@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sfx_Flanger", "sfx_flanger\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sfx_TranceGate", "sfx_TranceGate\sfx_TranceGate.vcxproj", "{13C8C253-8BD5-49DE-87A3-A16686F44D67}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sfx_Retrigger", "sfx_Retrigger\sfx_Retrigger.vcxproj", "{8BEBB851-621B-4616-BD82-14372016637A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{13C8C253-8BD5-49DE-87A3-A16686F44D67}.Release|x64.Build.0 = Release|x64
 		{13C8C253-8BD5-49DE-87A3-A16686F44D67}.Release|x86.ActiveCfg = Release|Win32
 		{13C8C253-8BD5-49DE-87A3-A16686F44D67}.Release|x86.Build.0 = Release|Win32
+		{8BEBB851-621B-4616-BD82-14372016637A}.Debug|x64.ActiveCfg = Debug|x64
+		{8BEBB851-621B-4616-BD82-14372016637A}.Debug|x64.Build.0 = Debug|x64
+		{8BEBB851-621B-4616-BD82-14372016637A}.Debug|x86.ActiveCfg = Debug|Win32
+		{8BEBB851-621B-4616-BD82-14372016637A}.Debug|x86.Build.0 = Debug|Win32
+		{8BEBB851-621B-4616-BD82-14372016637A}.Release|x64.ActiveCfg = Release|x64
+		{8BEBB851-621B-4616-BD82-14372016637A}.Release|x64.Build.0 = Release|x64
+		{8BEBB851-621B-4616-BD82-14372016637A}.Release|x86.ActiveCfg = Release|Win32
+		{8BEBB851-621B-4616-BD82-14372016637A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

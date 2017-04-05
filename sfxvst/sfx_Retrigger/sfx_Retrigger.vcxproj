@@ -19,11 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{88252941-8CA2-49A6-B5D6-B9B69003F668}</ProjectGuid>
+    <ProjectGuid>{8BEBB851-621B-4616-BD82-14372016637A}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>sfx_flanger</RootNamespace>
+    <RootNamespace>sfx_Retrigger</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
-    <ProjectName>sfx_Flanger</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -88,7 +87,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;SFX_FLANGER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;SFX_RETRIGGER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(VST3SDK_DIR);$(VST3SDK_DIR)\vstgui.sf\vstgui;$(VST3SDK_DIR)\pluginterfaces\vst2.x;$(VST3SDK_DIR)\public.sdk\source\vst2.x;$(SolutionDir)\common</AdditionalIncludeDirectories>
     </ClCompile>
@@ -104,7 +103,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;SFX_FLANGER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;SFX_RETRIGGER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(VST3SDK_DIR);$(VST3SDK_DIR)\vstgui.sf\vstgui;$(VST3SDK_DIR)\pluginterfaces\vst2.x;$(VST3SDK_DIR)\public.sdk\source\vst2.x;$(SolutionDir)\common</AdditionalIncludeDirectories>
     </ClCompile>
@@ -122,7 +121,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;SFX_FLANGER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;SFX_RETRIGGER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(VST3SDK_DIR);$(VST3SDK_DIR)\vstgui.sf\vstgui;$(VST3SDK_DIR)\pluginterfaces\vst2.x;$(VST3SDK_DIR)\public.sdk\source\vst2.x;$(SolutionDir)\common</AdditionalIncludeDirectories>
     </ClCompile>
@@ -142,7 +141,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;SFX_FLANGER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;SFX_RETRIGGER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(VST3SDK_DIR);$(VST3SDK_DIR)\vstgui.sf\vstgui;$(VST3SDK_DIR)\pluginterfaces\vst2.x;$(VST3SDK_DIR)\public.sdk\source\vst2.x;$(SolutionDir)\common</AdditionalIncludeDirectories>
     </ClCompile>
@@ -155,7 +154,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="SfxFlanger.cpp">
+    <ClCompile Include="SfxRetrigger.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -164,10 +163,10 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SfxFlanger.h" />
+    <None Include="vstplug.def" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="vstplug.def" />
+    <ClInclude Include="SfxRetrigger.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
