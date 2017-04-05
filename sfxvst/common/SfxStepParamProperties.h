@@ -9,7 +9,7 @@ class SfxStepParamProperties : public SfxParamProperties {
 protected :
 	void initialize() {
 		flags |= kVstParameterUsesFloatStep;
-		stepFloat = 1.0 / (float)_Steps;
+		stepFloat = 1.0f / (float)_Steps;
 		smallStepFloat = 0.f;
 		largeStepFloat = 1.f;
 	}

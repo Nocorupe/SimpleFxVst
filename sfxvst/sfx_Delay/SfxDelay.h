@@ -10,11 +10,11 @@
 #include "SfxProgramManager.h"
 
 
-class SfxRetrigger : public AudioEffectX
+class SfxDelay : public AudioEffectX
 {
 public:
-	SfxRetrigger(audioMasterCallback audioMaster);
-	~SfxRetrigger();
+	SfxDelay(audioMasterCallback audioMaster);
+	~SfxDelay();
 
 	// Processing
 	virtual void processReplacing(float** inputs, float** outputs, VstInt32 sampleFrames) override;
@@ -49,22 +49,20 @@ public:
 
 protected:
 	// parameters
-	static constexpr int NumParams = 2;
-	SfxExp2xParamProperties<8> mSpeed;
-	SfxParamProperties mLength;
-
+	static constexpr int NumParams = 4;
+	SfxExp2xParamProperties<12> mDepthSpeed;
+	SfxParamProperties mDry;
+	SfxParamProperties mWet;
+	SfxParamProperties mFeedback;
+	
 
 	// status
-	unsigned int mCycle;
-	unsigned int mDuty;
-	unsigned int mCount;
-	
 	// min BPM = 60.0;
 	// min speed (param) = 1.0;
 	// max sampling rate : 44100.0
-	static constexpr unsigned int MaxCycleSize = static_cast<unsigned int>(44100.0*(((60.0 / 60.0)*4.0) / 1.0));
-	std::array<std::array<float, MaxCycleSize>, 2> mReSrc;
-	unsigned int mReSrcCount;
+	static constexpr unsigned int MaxDelaySize = static_cast<unsigned int>(44100.0*(((60.0 / 60.0)*4.0) / 1.0));
+	RingBuffer<MaxDelaySize> mBuff[2];
+	std::array<float, 8196> mBlockBuff[2];
 
 	// programs
 	SfxProgramManager<NumParams> mProgramManager;
