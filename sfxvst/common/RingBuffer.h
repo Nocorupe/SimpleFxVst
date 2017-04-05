@@ -63,5 +63,6 @@ struct RingBuffer
 		_forward = (_forward + data_size) % _size;
 	}
 
+	
 };
 

@@ -179,12 +179,20 @@ void SfxDelay::processReplacing(float** aInputs, float** aOutputs, VstInt32 aSam
 	const float feedback = mFeedback.get();
 
 	for (VstInt32 f = 0; f < aSampleFrames; f++) {
-		
-		aOutputs[0][f] = (aInputs[0][f] * dry) + (mBuff[0][-delaySamples] * wet);
-		aOutputs[1][f] = (aInputs[1][f] * dry) + (mBuff[1][-delaySamples] * wet);
+		if ((f - delaySamples) < 0) {
+			mBlockBuff[0][f] = (aInputs[0][f]) + (mBuff[0][f - delaySamples] * feedback);
+			mBlockBuff[1][f] = (aInputs[1][f]) + (mBuff[1][f - delaySamples] * feedback);
+			
+			aOutputs[0][f] = (aInputs[0][f] * dry) + (mBuff[0][f - delaySamples] * wet);
+			aOutputs[1][f] = (aInputs[1][f] * dry) + (mBuff[1][f - delaySamples] * wet);
+		}
+		else {
+			mBlockBuff[0][f] = (aInputs[0][f]) + (mBlockBuff[0][f - delaySamples] * feedback);
+			mBlockBuff[1][f] = (aInputs[1][f]) + (mBlockBuff[1][f - delaySamples] * feedback);
 
-		mBlockBuff[0][f] = (aInputs[0][f]) + (mBuff[0][-delaySamples] * feedback);
-		mBlockBuff[1][f] = (aInputs[1][f]) + (mBuff[0][-delaySamples] * feedback);
+			aOutputs[0][f] = (aInputs[0][f] * dry) + (mBlockBuff[0][f - delaySamples] * wet);
+			aOutputs[1][f] = (aInputs[1][f] * dry) + (mBlockBuff[1][f - delaySamples] * wet);
+		}
 
 	}
 
