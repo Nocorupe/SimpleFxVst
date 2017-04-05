@@ -31,6 +31,10 @@ public :
 		return (int)((mVal * (float)_Steps) + 0.5f);
 	}
 
+	inline void setIndex(int aIndex) {
+		set(stepFloat * (float)aIndex);
+	}
+
 	virtual void set(float aVal) override {
 		mVal = stepFloat *(float)((int)((aVal * (float)_Steps) + 0.5f));
 	}
