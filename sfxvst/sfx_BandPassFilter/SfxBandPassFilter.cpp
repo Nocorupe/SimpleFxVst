@@ -1,19 +1,19 @@
 
-#include "SfxLowPassFilter.h"
+#include "SfxBandPassFilter.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <stdio.h>
 
 AudioEffect* createEffectInstance(audioMasterCallback audioMaster)
 {
-	return new SfxLowPassFilter(audioMaster);
+	return new SfxHighPassFilter(audioMaster);
 }
 
 
-SfxLowPassFilter::SfxLowPassFilter(audioMasterCallback audioMaster)
+SfxHighPassFilter::SfxHighPassFilter(audioMasterCallback audioMaster)
 	: AudioEffectX(audioMaster, 1, NumParams)
 	, mFc("Fc", "Hz")
-	, mQ("Q","")
+	, mQ("Q", "")
 	, mProgramManager(mPPPointers)
 {
 	setNumInputs(2);		// stereo in
@@ -25,7 +25,7 @@ SfxLowPassFilter::SfxLowPassFilter(audioMasterCallback audioMaster)
 
 	mPPPointers[0] = &mFc;
 	mPPPointers[1] = &mQ;
-	
+
 	// Program setup
 	mFc.setDisplayValue(1000.0f);
 	mQ.setDisplayValue(0.7071f); // almost 2ms
@@ -36,17 +36,17 @@ SfxLowPassFilter::SfxLowPassFilter(audioMasterCallback audioMaster)
 }
 
 
-SfxLowPassFilter::~SfxLowPassFilter()
+SfxHighPassFilter::~SfxHighPassFilter()
 {
 	// nothing to do here
 }
 
-void SfxLowPassFilter::suspend()
+void SfxHighPassFilter::suspend()
 {
 	// nothing to do
 }
 
-void SfxLowPassFilter::resume()
+void SfxHighPassFilter::resume()
 {
 	// @JP : 新しくエフェクトが起動された
 	mSrcBuff[0].init();
@@ -58,49 +58,49 @@ void SfxLowPassFilter::resume()
 	mWarmUpCount = 0;
 }
 
-void SfxLowPassFilter::setProgramName(char* name)
+void SfxHighPassFilter::setProgramName(char* name)
 {
 	mProgramManager.setProgramName(name);
 }
 
-void SfxLowPassFilter::setProgram(VstInt32 index)
+void SfxHighPassFilter::setProgram(VstInt32 index)
 {
 	mProgramManager.setProgram(index);
 }
 
 
-void SfxLowPassFilter::getProgramName(char* name)
+void SfxHighPassFilter::getProgramName(char* name)
 {
 	mProgramManager.getProgramName(name);
 }
 
-bool SfxLowPassFilter::getProgramNameIndexed(VstInt32 category, VstInt32 index, char * text)
+bool SfxHighPassFilter::getProgramNameIndexed(VstInt32 category, VstInt32 index, char * text)
 {
 	return mProgramManager.getProgramNameIndexed(index, text);
 }
 
 
-void SfxLowPassFilter::setParameter(VstInt32 index, float value)
+void SfxHighPassFilter::setParameter(VstInt32 index, float value)
 {
 	if (index >= numParams) return;
 	mPPPointers[index]->set(value);
 }
 
 
-float SfxLowPassFilter::getParameter(VstInt32 index)
+float SfxHighPassFilter::getParameter(VstInt32 index)
 {
 	if (index >= numParams) return 0;
 	return mPPPointers[index]->get();
 }
 
 
-void SfxLowPassFilter::getParameterName(VstInt32 index, char* name)
+void SfxHighPassFilter::getParameterName(VstInt32 index, char* name)
 {
 	if (index < 0 || index >= numParams) return;
 	vst_strncpy(name, mPPPointers[index]->name, kVstMaxNameLen);
 }
 
-bool SfxLowPassFilter::getParameterProperties(VstInt32 index, VstParameterProperties * properties)
+bool SfxHighPassFilter::getParameterProperties(VstInt32 index, VstParameterProperties * properties)
 {
 	if (index < 0 || index >= numParams) return false;
 	memcpy(properties, mPPPointers[index], sizeof(VstParameterProperties));
@@ -108,72 +108,72 @@ bool SfxLowPassFilter::getParameterProperties(VstInt32 index, VstParameterProper
 }
 
 
-void SfxLowPassFilter::getParameterDisplay(VstInt32 index, char* text)
+void SfxHighPassFilter::getParameterDisplay(VstInt32 index, char* text)
 {
 	if (index < 0 || index >= numParams) return;
 	mPPPointers[index]->display(text);
 }
 
 
-void SfxLowPassFilter::getParameterLabel(VstInt32 index, char* label)
+void SfxHighPassFilter::getParameterLabel(VstInt32 index, char* label)
 {
 	if (index < 0 || index >= numParams) return;
 	vst_strncpy(label, mPPPointers[index]->label, kVstMaxNameLen);
 }
 
 
-bool SfxLowPassFilter::getEffectName(char* name)
+bool SfxHighPassFilter::getEffectName(char* name)
 {
-	vst_strncpy(name, "SfxLowPassFilter", kVstMaxEffectNameLen);
+	vst_strncpy(name, "SfxHighPassFilter", kVstMaxEffectNameLen);
 	return true;
 }
 
 
-bool SfxLowPassFilter::getProductString(char* text)
+bool SfxHighPassFilter::getProductString(char* text)
 {
-	vst_strncpy(text, "SfxLowPassFilter", kVstMaxProductStrLen);
+	vst_strncpy(text, "SfxHighPassFilter", kVstMaxProductStrLen);
 	return true;
 }
 
 
-bool SfxLowPassFilter::getVendorString(char* text)
+bool SfxHighPassFilter::getVendorString(char* text)
 {
 	vst_strncpy(text, "SimpleFxVst", kVstMaxVendorStrLen);
 	return true;
 }
 
 
-VstInt32 SfxLowPassFilter::getVendorVersion()
+VstInt32 SfxHighPassFilter::getVendorVersion()
 {
 	return 1000;
 }
 
-VstPlugCategory SfxLowPassFilter::getPlugCategory()
+VstPlugCategory SfxHighPassFilter::getPlugCategory()
 {
 	return kPlugCategEffect;
 }
 
 
-VstInt32 SfxLowPassFilter::canDo(char * text)
+VstInt32 SfxHighPassFilter::canDo(char * text)
 {
 	if (strcmp(text, PlugCanDos::canDoReceiveVstTimeInfo) == 0) return 1;
 	return -1;
 }
 
 
-void SfxLowPassFilter::processReplacing(float** aInputs, float** aOutputs, VstInt32 aSampleFrames)
+void SfxHighPassFilter::processReplacing(float** aInputs, float** aOutputs, VstInt32 aSampleFrames)
 {
 	double fc = mFc.getDisplayValue();
 	double Q = mQ.getDisplayValue();
 
-	double omega = 2.0 * M_PI * fc / (sampleRate);
+	double omega = 2.0 * M_PI * (fc) / (sampleRate);
 	double sin_omega = std::sin(omega);
 	double cos_omega = std::cos(omega);
 	double alpha = sin_omega / (2.0 * Q);
 
-	mB[0] = (1.0 - cos_omega) / 2.0;
-	mB[1] = 1.0 - cos_omega;
-	mB[2] = (1.0 - cos_omega) / 2.0;
+	mB[0] = (1.0 + cos_omega) / 2.0;
+	mB[1] = -1.0*(1.0 + cos_omega);
+	mB[2] = (1.0 + cos_omega) / 2.0;
 	mA[0] = 1.0 + alpha;
 	mA[1] = -2.0*cos_omega;
 	mA[2] = 1.0 - alpha;
@@ -183,7 +183,6 @@ void SfxLowPassFilter::processReplacing(float** aInputs, float** aOutputs, VstIn
 	mSrcBuff[1].update(aInputs[1], aSampleFrames);
 	mDstBuff[0].update(aInputs[0], aSampleFrames);
 	mDstBuff[1].update(aInputs[1], aSampleFrames);
-
 
 	if (mIsWarmUp) {
 
@@ -219,20 +218,20 @@ void SfxLowPassFilter::processReplacing(float** aInputs, float** aOutputs, VstIn
 		return;
 	}
 
-	
+
 	for (int i = 0; i< aSampleFrames; i++) {
-		
+
 		mDstBuff[0][i] = (float)(
-			  (mB[0] / mA[0])*(double)(mSrcBuff[0][i])
-			+ (mB[1] / mA[0])*(double)(mSrcBuff[0][i-1])
-			+ (mB[2] / mA[0])*(double)(mSrcBuff[0][i-2])
-			- (mA[1] / mA[0])*(double)(mDstBuff[0][i-1])
-			- (mA[2] / mA[0])*(double)(mDstBuff[0][i-2]));
+			(mB[0] / mA[0])*(double)(mSrcBuff[0][i])
+			+ (mB[1] / mA[0])*(double)(mSrcBuff[0][i - 1])
+			+ (mB[2] / mA[0])*(double)(mSrcBuff[0][i - 2])
+			- (mA[1] / mA[0])*(double)(mDstBuff[0][i - 1])
+			- (mA[2] / mA[0])*(double)(mDstBuff[0][i - 2]));
 
 		aOutputs[0][i] = mDstBuff[0][i];
 
 		mDstBuff[1][i] = (float)(
-			  (mB[0] / mA[0])*(double)(mSrcBuff[1][i])
+			(mB[0] / mA[0])*(double)(mSrcBuff[1][i])
 			+ (mB[1] / mA[0])*(double)(mSrcBuff[1][i - 1])
 			+ (mB[2] / mA[0])*(double)(mSrcBuff[1][i - 2])
 			- (mA[1] / mA[0])*(double)(mDstBuff[1][i - 1])

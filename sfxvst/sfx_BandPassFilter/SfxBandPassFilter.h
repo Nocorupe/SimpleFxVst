@@ -58,7 +58,7 @@ protected:
 	// status
 	std::array<double, 3> mA;
 	std::array<double, 3> mB;
-	
+
 	bool mIsWarmUp; // @JP : suspend時にtrue 原音とクロスフェードさせるウォームアップをするか
 	static constexpr int WarmUpFrames = 2048;
 	int mWarmUpCount;

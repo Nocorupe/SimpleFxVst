@@ -53,6 +53,9 @@ void SfxHighPassFilter::resume()
 	mSrcBuff[1].init();
 	mDstBuff[0].init();
 	mDstBuff[1].init();
+
+	mIsWarmUp = true;
+	mWarmUpCount = 0;
 }
 
 void SfxHighPassFilter::setProgramName(char* name)
@@ -180,6 +183,41 @@ void SfxHighPassFilter::processReplacing(float** aInputs, float** aOutputs, VstI
 	mSrcBuff[1].update(aInputs[1], aSampleFrames);
 	mDstBuff[0].update(aInputs[0], aSampleFrames);
 	mDstBuff[1].update(aInputs[1], aSampleFrames);
+
+	if (mIsWarmUp) {
+
+		for (int i = 0; i< aSampleFrames; i++) {
+			int count = std::min(mWarmUpCount, WarmUpFrames);
+			float w = (float)count / (float)WarmUpFrames;
+
+			mDstBuff[0][i] = (float)(
+				(mB[0] / mA[0])*(double)(mSrcBuff[0][i])
+				+ (mB[1] / mA[0])*(double)(mSrcBuff[0][i - 1])
+				+ (mB[2] / mA[0])*(double)(mSrcBuff[0][i - 2])
+				- (mA[1] / mA[0])*(double)(mDstBuff[0][i - 1])
+				- (mA[2] / mA[0])*(double)(mDstBuff[0][i - 2]));
+
+			aOutputs[0][i] = (mDstBuff[0][i] * w) + (aInputs[0][i] * (1.0f-w));
+
+			mDstBuff[1][i] = (float)(
+				(mB[0] / mA[0])*(double)(mSrcBuff[1][i])
+				+ (mB[1] / mA[0])*(double)(mSrcBuff[1][i - 1])
+				+ (mB[2] / mA[0])*(double)(mSrcBuff[1][i - 2])
+				- (mA[1] / mA[0])*(double)(mDstBuff[1][i - 1])
+				- (mA[2] / mA[0])*(double)(mDstBuff[1][i - 2]));
+
+			aOutputs[1][i] = (mDstBuff[1][i] * w) + (aInputs[1][i] * (1.0f - w));
+			
+			mWarmUpCount++;
+		}
+		
+		if (mWarmUpCount >= WarmUpFrames) {
+			mIsWarmUp = false;
+		}
+
+		return;
+	}
+	
 
 	for (int i = 0; i< aSampleFrames; i++) {
 
