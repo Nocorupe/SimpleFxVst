@@ -47,16 +47,13 @@ public:
 	// cando
 	virtual VstInt32 canDo(char* text) override;
 
-	// delete this
-	virtual void close() override;
-
+	
 protected:
 	// parameters
 	static constexpr int NumParams = 1;
 	SfxStepParamProperties<64> mAmount;
 	
 	// status
-	RingBuffer<8192> mBuff[2];
 	
 	// programs
 	SfxProgramManager<NumParams> mProgramManager;
