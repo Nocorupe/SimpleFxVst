@@ -48,8 +48,6 @@ public:
 	// cando
 	virtual VstInt32 canDo(char* text) override;
 
-	// delete this
-	virtual void close() override;
 
 protected:
 	// parameters

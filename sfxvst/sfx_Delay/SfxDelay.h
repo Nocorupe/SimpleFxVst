@@ -47,9 +47,6 @@ public:
 	// cando
 	virtual VstInt32 canDo(char* text) override;
 
-	// delete this
-	virtual void close() override;
-
 protected:
 	// parameters
 	static constexpr int NumParams = 4;

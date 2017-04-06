@@ -3,10 +3,14 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <stdio.h>
+#include <memory>
+
+std::unique_ptr<SfxRetrigger> gFxUniquePtr;
 
 AudioEffect* createEffectInstance(audioMasterCallback audioMaster)
 {
-	return new SfxRetrigger(audioMaster);
+	gFxUniquePtr = std::unique_ptr<SfxRetrigger>(new SfxRetrigger(audioMaster));
+	return gFxUniquePtr.get();
 }
 
 
@@ -161,10 +165,6 @@ VstInt32 SfxRetrigger::canDo(char * text)
 	return -1;
 }
 
-void SfxRetrigger::close()
-{
-	delete this;
-}
 
 
 void SfxRetrigger::processReplacing(float** aInputs, float** aOutputs, VstInt32 aSampleFrames)

@@ -3,10 +3,14 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <stdio.h>
+#include <memory>
+
+std::unique_ptr<SfxDelay> gFxUniquePtr;
 
 AudioEffect* createEffectInstance(audioMasterCallback audioMaster)
 {
-	return new SfxDelay(audioMaster);
+	gFxUniquePtr = std::unique_ptr<SfxDelay>(new SfxDelay(audioMaster));
+	return gFxUniquePtr.get();
 }
 
 
@@ -160,11 +164,6 @@ VstInt32 SfxDelay::canDo(char * text)
 {
 	if (strcmp(text, PlugCanDos::canDoReceiveVstTimeInfo) == 0) return 1;
 	return -1;
-}
-
-void SfxDelay::close()
-{
-	delete this;
 }
 
 

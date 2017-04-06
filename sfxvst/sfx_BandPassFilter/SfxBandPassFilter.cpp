@@ -3,10 +3,14 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <stdio.h>
+#include <memory>
+
+std::unique_ptr<SfxBandPassFilter> gFxUniquePtr;
 
 AudioEffect* createEffectInstance(audioMasterCallback audioMaster)
 {
-	return new SfxBandPassFilter(audioMaster);
+	gFxUniquePtr = std::unique_ptr<SfxBandPassFilter>(new SfxBandPassFilter(audioMaster));
+	return gFxUniquePtr.get();
 }
 
 
@@ -160,10 +164,6 @@ VstInt32 SfxBandPassFilter::canDo(char * text)
 	return -1;
 }
 
-void SfxBandPassFilter::close()
-{
-	delete this;
-}
 
 
 void SfxBandPassFilter::processReplacing(float** aInputs, float** aOutputs, VstInt32 aSampleFrames)

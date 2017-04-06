@@ -3,10 +3,14 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <stdio.h>
+#include <memory>
+
+std::unique_ptr<SfxPeakingEqualizer> gFxUniquePtr;
 
 AudioEffect* createEffectInstance(audioMasterCallback audioMaster)
 {
-	return new SfxPeakingEqualizer(audioMaster);
+	gFxUniquePtr = std::unique_ptr<SfxPeakingEqualizer>(new SfxPeakingEqualizer(audioMaster));
+	return gFxUniquePtr.get();
 }
 
 
@@ -163,10 +167,6 @@ VstInt32 SfxPeakingEqualizer::canDo(char * text)
 	return -1;
 }
 
-void SfxPeakingEqualizer::close()
-{
-	delete this;
-}
 
 
 void SfxPeakingEqualizer::processReplacing(float** aInputs, float** aOutputs, VstInt32 aSampleFrames)
