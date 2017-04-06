@@ -50,9 +50,10 @@ public:
 
 protected:
 	// parameters
-	static constexpr int NumParams = 2;
+	static constexpr int NumParams = 3;
 	SfxLogParamProperties<10, 22050> mFc;
 	SfxRangeParamProperties<0, 4> mQ;
+	SfxRangeParamProperties<0, 20> mGain;
 
 
 	// status

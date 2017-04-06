@@ -1,5 +1,5 @@
 
-#include "SfxBandPassFilter.h"
+#include "SfxPeakingEqualizer.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <stdio.h>
@@ -14,6 +14,7 @@ SfxBandPassFilter::SfxBandPassFilter(audioMasterCallback audioMaster)
 	: AudioEffectX(audioMaster, 1, NumParams)
 	, mFc("Fc", "Hz")
 	, mQ("Q", "")
+	, mGain("Gain", "")
 	, mProgramManager(mPPPointers)
 {
 	setNumInputs(2);		// stereo in
@@ -25,10 +26,12 @@ SfxBandPassFilter::SfxBandPassFilter(audioMasterCallback audioMaster)
 
 	mPPPointers[0] = &mFc;
 	mPPPointers[1] = &mQ;
+	mPPPointers[2] = &mGain;
 
 	// Program setup
 	mFc.setDisplayValue(1000.0f);
 	mQ.setDisplayValue(0.7071f);
+	mGain.setDisplayValue(12.5f);
 	mProgramManager.addCurrentState("Default");
 
 	mProgramManager.setProgramName("Default");
@@ -165,19 +168,21 @@ void SfxBandPassFilter::processReplacing(float** aInputs, float** aOutputs, VstI
 {
 	double fc = mFc.getDisplayValue();
 	double Q = mQ.getDisplayValue();
-	
-	double BW = 1.0 / sqrt(2.0);
-	double omega = 2.0 * M_PI * fc / (sampleRate);
-	double sin_omega = std::sin(omega);
-	double cos_omega = std::cos(omega);
-	double alpha = sin_omega * sinh(log(2.0) / 2.0 * BW * omega / sin_omega);
+	double dBgain = mGain.getDisplayValue();
 
-	mB[0] = Q * alpha;
-	mB[1] = 0;
-	mB[2] = -Q * alpha;
-	mA[0] = 1.0 + alpha;
-	mA[1] = -2.0*cos_omega;
-	mA[2] = 1.0 - alpha;
+	double A = std::pow(10.0, (dBgain / 40.0));
+	double omega = 2.0 * M_PI * fc / (sampleRate);
+	double cos_omega = std::cos(omega);
+	double sin_omega = std::sin(omega);
+	double alpha = sin_omega / (2.0 * Q);
+
+
+	mB[0] = 1.0 + alpha*A;
+	mB[1] = -2.0 * cos_omega;
+	mB[2] = 1.0 - alpha*A;
+	mA[0] = 1.0 + alpha / A;
+	mA[1] = -2.0 * cos_omega;
+	mA[2] = 1.0 - alpha / A;
 
 
 	mSrcBuff[0].update(aInputs[0], aSampleFrames);
