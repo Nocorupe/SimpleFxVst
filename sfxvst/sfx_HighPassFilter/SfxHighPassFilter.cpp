@@ -160,6 +160,11 @@ VstInt32 SfxHighPassFilter::canDo(char * text)
 	return -1;
 }
 
+void SfxHighPassFilter::close()
+{
+	delete this;
+}
+
 
 void SfxHighPassFilter::processReplacing(float** aInputs, float** aOutputs, VstInt32 aSampleFrames)
 {

@@ -162,6 +162,11 @@ VstInt32 SfxDelay::canDo(char * text)
 	return -1;
 }
 
+void SfxDelay::close()
+{
+	delete this;
+}
+
 
 void SfxDelay::processReplacing(float** aInputs, float** aOutputs, VstInt32 aSampleFrames)
 {

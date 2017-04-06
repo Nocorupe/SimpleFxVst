@@ -161,6 +161,11 @@ VstInt32 SfxRetrigger::canDo(char * text)
 	return -1;
 }
 
+void SfxRetrigger::close()
+{
+	delete this;
+}
+
 
 void SfxRetrigger::processReplacing(float** aInputs, float** aOutputs, VstInt32 aSampleFrames)
 {

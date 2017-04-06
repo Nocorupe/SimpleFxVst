@@ -11,11 +11,11 @@
 #include "SfxProgramManager.h"
 
 
-class SfxBandPassFilter : public AudioEffectX
+class SfxPeakingEqualizer : public AudioEffectX
 {
 public:
-	SfxBandPassFilter(audioMasterCallback audioMaster);
-	~SfxBandPassFilter();
+	SfxPeakingEqualizer(audioMasterCallback audioMaster);
+	~SfxPeakingEqualizer();
 
 	// Processing
 	virtual void processReplacing(float** inputs, float** outputs, VstInt32 sampleFrames) override;
@@ -47,6 +47,9 @@ public:
 
 	// cando
 	virtual VstInt32 canDo(char* text) override;
+
+	// delete this
+	virtual void close() override;
 
 protected:
 	// parameters

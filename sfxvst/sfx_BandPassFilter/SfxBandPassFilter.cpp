@@ -160,6 +160,11 @@ VstInt32 SfxBandPassFilter::canDo(char * text)
 	return -1;
 }
 
+void SfxBandPassFilter::close()
+{
+	delete this;
+}
+
 
 void SfxBandPassFilter::processReplacing(float** aInputs, float** aOutputs, VstInt32 aSampleFrames)
 {

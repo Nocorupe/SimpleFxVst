@@ -6,11 +6,11 @@
 
 AudioEffect* createEffectInstance(audioMasterCallback audioMaster)
 {
-	return new SfxBandPassFilter(audioMaster);
+	return new SfxPeakingEqualizer(audioMaster);
 }
 
 
-SfxBandPassFilter::SfxBandPassFilter(audioMasterCallback audioMaster)
+SfxPeakingEqualizer::SfxPeakingEqualizer(audioMasterCallback audioMaster)
 	: AudioEffectX(audioMaster, 1, NumParams)
 	, mFc("Fc", "Hz")
 	, mQ("Q", "")
@@ -39,17 +39,17 @@ SfxBandPassFilter::SfxBandPassFilter(audioMasterCallback audioMaster)
 }
 
 
-SfxBandPassFilter::~SfxBandPassFilter()
+SfxPeakingEqualizer::~SfxPeakingEqualizer()
 {
 	// nothing to do here
 }
 
-void SfxBandPassFilter::suspend()
+void SfxPeakingEqualizer::suspend()
 {
 	// nothing to do
 }
 
-void SfxBandPassFilter::resume()
+void SfxPeakingEqualizer::resume()
 {
 	// @JP : 新しくエフェクトが起動された
 	mSrcBuff[0].init();
@@ -61,49 +61,49 @@ void SfxBandPassFilter::resume()
 	mWarmUpCount = 0;
 }
 
-void SfxBandPassFilter::setProgramName(char* name)
+void SfxPeakingEqualizer::setProgramName(char* name)
 {
 	mProgramManager.setProgramName(name);
 }
 
-void SfxBandPassFilter::setProgram(VstInt32 index)
+void SfxPeakingEqualizer::setProgram(VstInt32 index)
 {
 	mProgramManager.setProgram(index);
 }
 
 
-void SfxBandPassFilter::getProgramName(char* name)
+void SfxPeakingEqualizer::getProgramName(char* name)
 {
 	mProgramManager.getProgramName(name);
 }
 
-bool SfxBandPassFilter::getProgramNameIndexed(VstInt32 category, VstInt32 index, char * text)
+bool SfxPeakingEqualizer::getProgramNameIndexed(VstInt32 category, VstInt32 index, char * text)
 {
 	return mProgramManager.getProgramNameIndexed(index, text);
 }
 
 
-void SfxBandPassFilter::setParameter(VstInt32 index, float value)
+void SfxPeakingEqualizer::setParameter(VstInt32 index, float value)
 {
 	if (index >= numParams) return;
 	mPPPointers[index]->set(value);
 }
 
 
-float SfxBandPassFilter::getParameter(VstInt32 index)
+float SfxPeakingEqualizer::getParameter(VstInt32 index)
 {
 	if (index >= numParams) return 0;
 	return mPPPointers[index]->get();
 }
 
 
-void SfxBandPassFilter::getParameterName(VstInt32 index, char* name)
+void SfxPeakingEqualizer::getParameterName(VstInt32 index, char* name)
 {
 	if (index < 0 || index >= numParams) return;
 	vst_strncpy(name, mPPPointers[index]->name, kVstMaxNameLen);
 }
 
-bool SfxBandPassFilter::getParameterProperties(VstInt32 index, VstParameterProperties * properties)
+bool SfxPeakingEqualizer::getParameterProperties(VstInt32 index, VstParameterProperties * properties)
 {
 	if (index < 0 || index >= numParams) return false;
 	memcpy(properties, mPPPointers[index], sizeof(VstParameterProperties));
@@ -111,60 +111,65 @@ bool SfxBandPassFilter::getParameterProperties(VstInt32 index, VstParameterPrope
 }
 
 
-void SfxBandPassFilter::getParameterDisplay(VstInt32 index, char* text)
+void SfxPeakingEqualizer::getParameterDisplay(VstInt32 index, char* text)
 {
 	if (index < 0 || index >= numParams) return;
 	mPPPointers[index]->display(text);
 }
 
 
-void SfxBandPassFilter::getParameterLabel(VstInt32 index, char* label)
+void SfxPeakingEqualizer::getParameterLabel(VstInt32 index, char* label)
 {
 	if (index < 0 || index >= numParams) return;
 	vst_strncpy(label, mPPPointers[index]->label, kVstMaxNameLen);
 }
 
 
-bool SfxBandPassFilter::getEffectName(char* name)
+bool SfxPeakingEqualizer::getEffectName(char* name)
 {
-	vst_strncpy(name, "SfxBandPassFilter", kVstMaxEffectNameLen);
+	vst_strncpy(name, "SfxPeakingEqualizer", kVstMaxEffectNameLen);
 	return true;
 }
 
 
-bool SfxBandPassFilter::getProductString(char* text)
+bool SfxPeakingEqualizer::getProductString(char* text)
 {
-	vst_strncpy(text, "SfxBandPassFilter", kVstMaxProductStrLen);
+	vst_strncpy(text, "SfxPeakingEqualizer", kVstMaxProductStrLen);
 	return true;
 }
 
 
-bool SfxBandPassFilter::getVendorString(char* text)
+bool SfxPeakingEqualizer::getVendorString(char* text)
 {
 	vst_strncpy(text, "SimpleFxVst", kVstMaxVendorStrLen);
 	return true;
 }
 
 
-VstInt32 SfxBandPassFilter::getVendorVersion()
+VstInt32 SfxPeakingEqualizer::getVendorVersion()
 {
 	return 1000;
 }
 
-VstPlugCategory SfxBandPassFilter::getPlugCategory()
+VstPlugCategory SfxPeakingEqualizer::getPlugCategory()
 {
 	return kPlugCategEffect;
 }
 
 
-VstInt32 SfxBandPassFilter::canDo(char * text)
+VstInt32 SfxPeakingEqualizer::canDo(char * text)
 {
 	if (strcmp(text, PlugCanDos::canDoReceiveVstTimeInfo) == 0) return 1;
 	return -1;
 }
 
+void SfxPeakingEqualizer::close()
+{
+	delete this;
+}
 
-void SfxBandPassFilter::processReplacing(float** aInputs, float** aOutputs, VstInt32 aSampleFrames)
+
+void SfxPeakingEqualizer::processReplacing(float** aInputs, float** aOutputs, VstInt32 aSampleFrames)
 {
 	double fc = mFc.getDisplayValue();
 	double Q = mQ.getDisplayValue();

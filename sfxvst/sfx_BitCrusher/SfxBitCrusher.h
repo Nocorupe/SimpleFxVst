@@ -6,15 +6,15 @@
 #include "audioeffectx.h"
 
 #include "RingBuffer.h"
-#include "SfxExp2xParamProperties.h"
+#include "SfxStepParamProperties.h"
 #include "SfxProgramManager.h"
 
 
-class SfxRetrigger : public AudioEffectX
+class SfxBitCrusher : public AudioEffectX
 {
 public:
-	SfxRetrigger(audioMasterCallback audioMaster);
-	~SfxRetrigger();
+	SfxBitCrusher(audioMasterCallback audioMaster);
+	~SfxBitCrusher();
 
 	// Processing
 	virtual void processReplacing(float** inputs, float** outputs, VstInt32 sampleFrames) override;
@@ -52,23 +52,12 @@ public:
 
 protected:
 	// parameters
-	static constexpr int NumParams = 2;
-	SfxExp2xParamProperties<8> mSpeed;
-	SfxParamProperties mLength;
-
-
-	// status
-	unsigned int mCycle;
-	unsigned int mDuty;
-	unsigned int mCount;
+	static constexpr int NumParams = 1;
+	SfxStepParamProperties<64> mAmount;
 	
-	// min BPM = 60.0;
-	// min speed (param) = 1.0;
-	// max sampling rate : 44100.0
-	static constexpr unsigned int MaxCycleSize = static_cast<unsigned int>(44100.0*(((60.0 / 60.0)*4.0) / 1.0));
-	std::array<std::array<float, MaxCycleSize>, 2> mReSrc;
-	unsigned int mReSrcCount;
-
+	// status
+	RingBuffer<8192> mBuff[2];
+	
 	// programs
 	SfxProgramManager<NumParams> mProgramManager;
 
