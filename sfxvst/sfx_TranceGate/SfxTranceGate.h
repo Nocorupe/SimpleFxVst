@@ -1,6 +1,5 @@
-﻿
-#ifndef SFXDELEY_H_
-#define SFXDELEY_H_
+﻿#ifndef SFXTRANCEGATE_H_
+#define SFXTRANCEGATE_H_
 
 
 #include "audioeffectx.h"
@@ -10,11 +9,11 @@
 #include "SfxProgramManager.h"
 
 
-class SfxDelay : public AudioEffectX
+class SfxTranceGate : public AudioEffectX
 {
 public:
-	SfxDelay(audioMasterCallback audioMaster);
-	~SfxDelay();
+	SfxTranceGate(audioMasterCallback audioMaster);
+	~SfxTranceGate();
 
 	// Processing
 	virtual void processReplacing(float** inputs, float** outputs, VstInt32 sampleFrames) override;
@@ -49,20 +48,21 @@ public:
 
 protected:
 	// parameters
-	static constexpr int NumParams = 4;
-	SfxExp2xParamProperties<12> mDepthSpeed;
-	SfxParamProperties mDry;
-	SfxParamProperties mWet;
-	SfxParamProperties mFeedback;
-	
+	static constexpr int NumParams = 3;
+	SfxExp2xParamProperties<8> mSpeed;
+	SfxParamProperties mLength;
+	SfxParamProperties mGain;
+
 
 	// status
-	// min BPM = 60.0;
-	// min speed (param) = 1.0;
-	// max sampling rate : 44100.0
-	static constexpr unsigned int MaxDelaySize = static_cast<unsigned int>(44100.0*(((60.0 / 60.0)*4.0) / 1.0));
-	RingBuffer<MaxDelaySize> mBuff[2];
-	std::array<float, 8196> mBlockBuff[2];
+	unsigned int mGateCycle;
+	unsigned int mGateCount;
+	unsigned int mGateDuty;
+
+	static constexpr int GateWindowSize = 8;
+	std::array<float, GateWindowSize> mGateWindow;
+
+	RingBuffer<8192> mBuff[2];
 
 	// programs
 	SfxProgramManager<NumParams> mProgramManager;

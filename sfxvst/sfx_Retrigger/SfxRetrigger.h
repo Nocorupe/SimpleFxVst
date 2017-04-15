@@ -1,6 +1,6 @@
-
-#ifndef __sfx_gain__
-#define __sfx_gain__
+﻿
+#ifndef SFXRETRIGGER_H_
+#define SFXRETRIGGER_H_
 
 
 #include "audioeffectx.h"

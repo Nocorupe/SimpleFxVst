@@ -154,7 +154,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="sfx_TranceGate.cpp">
+    <ClCompile Include="SfxTranceGate.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -164,7 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\SfxExp2xParamProperties.h" />
-    <ClInclude Include="sfx_TranceGate.h" />
+    <ClInclude Include="SfxTranceGate.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vstplug.def" />

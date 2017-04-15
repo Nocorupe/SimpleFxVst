@@ -1,6 +1,6 @@
-
-#ifndef __sfx_gain__
-#define __sfx_gain__
+﻿
+#ifndef SFXHIGHPASSFILTER_H_
+#define SFXHIGHPASSFILTER_H_
 
 
 #include "audioeffectx.h"

@@ -1,4 +1,4 @@
-//
+﻿//
 //  The MIT License(MIT)
 //
 //  Copyright(c) 2016 Nocorupe
@@ -32,10 +32,10 @@ public :
 
 	virtual void display(char* aText) override {
 		if (mVal < 0.5f) {
-			vst_strncpy(aText, "off", kVstMaxNameLen);
+			vst_strncpy(aText, "off", kVstMaxParamStrLen);
 		}
 		else {
-			vst_strncpy(aText, "on", kVstMaxNameLen);
+			vst_strncpy(aText, "on", kVstMaxParamStrLen);
 		}
 	}
 };

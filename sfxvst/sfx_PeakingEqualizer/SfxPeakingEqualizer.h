@@ -1,6 +1,6 @@
-
-#ifndef __sfx_gain__
-#define __sfx_gain__
+﻿
+#ifndef SFXPEAKINGEQUALIZER_H_
+#define SFXPEAKINGEQUALIZER_H_
 
 
 #include "audioeffectx.h"

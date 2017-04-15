@@ -15,18 +15,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="sfx_TranceGate.cpp">
+    <ClCompile Include="Source.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source.cpp">
+    <ClCompile Include="SfxTranceGate.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="sfx_TranceGate.h">
+    <ClInclude Include="..\common\SfxExp2xParamProperties.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\common\SfxExp2xParamProperties.h">
+    <ClInclude Include="SfxTranceGate.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>

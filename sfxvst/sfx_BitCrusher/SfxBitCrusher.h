@@ -1,6 +1,6 @@
-
-#ifndef __sfx_gain__
-#define __sfx_gain__
+﻿
+#ifndef SFXBITCRUSHER_H_
+#define SFXBITCRUSHER_H_
 
 
 #include "audioeffectx.h"

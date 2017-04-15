@@ -1,4 +1,4 @@
-
+﻿
 #pragma once
 
 #include <iomanip>
@@ -42,7 +42,7 @@ public :
 	virtual void display(char* aText) override {
 		std::stringstream ss;
 		ss << index();
-		vst_strncpy(aText, ss.str().data(), kVstMaxNameLen);
+		vst_strncpy(aText, ss.str().data(), kVstMaxParamStrLen);
 	}
 
 };

@@ -1,4 +1,4 @@
-
+﻿
 #include "SfxPeakingEqualizer.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -15,7 +15,7 @@ AudioEffect* createEffectInstance(audioMasterCallback audioMaster)
 
 
 SfxPeakingEqualizer::SfxPeakingEqualizer(audioMasterCallback audioMaster)
-	: AudioEffectX(audioMaster, 1, NumParams)
+	: AudioEffectX(audioMaster, 3, NumParams)
 	, mFc("Fc", "Hz")
 	, mQ("Q", "")
 	, mGain("Gain", "")
@@ -37,6 +37,18 @@ SfxPeakingEqualizer::SfxPeakingEqualizer(audioMasterCallback audioMaster)
 	mQ.setDisplayValue(0.7071f);
 	mGain.setDisplayValue(12.5f);
 	mProgramManager.addCurrentState("Default");
+
+	mFc.setDisplayValue(200.0f);
+	mQ.setDisplayValue(0.7071f);
+	mGain.setDisplayValue(12.5f);
+	mProgramManager.addCurrentState("Fc Low");
+
+	mFc.setDisplayValue(4000.0f);
+	mQ.setDisplayValue(0.7071f);
+	mGain.setDisplayValue(12.5f);
+	mProgramManager.addCurrentState("Fc High");
+
+
 
 	mProgramManager.setProgramName("Default");
 	resume();

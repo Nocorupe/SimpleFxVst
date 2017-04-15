@@ -1,4 +1,4 @@
-
+﻿
 #pragma once
 
 #include "audioeffectx.h"
@@ -9,6 +9,9 @@
 class SfxParamProperties : public VstParameterProperties
 {
 public :
+	// @JP: 
+	// Vst2.4 document では kVstParamStrLen が used for effGetParamName　
+	// だが 多くのVSTプラグイン同様、より多くの文字数で扱う
 	char name[kVstMaxNameLen];
 
 public :
@@ -19,7 +22,7 @@ public :
 	}
 	SfxParamProperties(std::string aName, std::string aLabel) 
 	{
-		vst_strncpy(name, aName.data(), kVstMaxNameLen);
+		vst_strncpy(name, aName.data(), kVstMaxParamStrLen);
 		vst_strncpy(label, aLabel.data(), kVstMaxLabelLen);
 	}
 	~SfxParamProperties() = default;
@@ -35,7 +38,7 @@ public :
 	virtual void display(char* aText) {
 		std::stringstream ss;
 		ss << mVal;
-		vst_strncpy(aText, ss.str().data(), kVstMaxNameLen);
+		vst_strncpy(aText, ss.str().data(), kVstMaxParamStrLen);
 	}
 
 protected :
