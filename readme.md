@@ -2,7 +2,7 @@
 ---------------------------------
 Simple audio effect VST2.x plugins.  
   
-日本語->readmejp.md
+日本語->[readmejp.md](https://github.com/Nocorupe/SimpleFxVst/blob/master/readmejp.md)
 
 ## About
 * For use in games and media arts etc. Not suitable for use in DAW.
@@ -23,9 +23,11 @@ Simple audio effect VST2.x plugins.
 ## Build
 * Download "VST3 SDK" from [Steinberg Website](http://www.steinberg.net/en/company/developer.html) and unzip.
 * Add "VST3 SDK" directory path to Windows Environment.
-> name : VST3SDK_DIR
-> value : "VST3 SDK" directory path 
+```
+name : VST3SDK_DIR
+value : "VST3 SDK" directory path 
+```
 * Launch VisualStudio 2015 and build.
 
 ## License
-MIT
+[MIT](https://github.com/Nocorupe/SimpleFxVst/blob/master/LICENSE)

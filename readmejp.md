@@ -22,10 +22,12 @@
 ## Build
 * "VST3 SDK"を [Steinberg Website](http://www.steinberg.net/en/company/developer.html) からダウンロード、適宜展開。
 * Windowsの環境変数に以下の値を追加
-> name : VST3SDK_DIR
-> value : "VST3 SDK"を展開したディレクトリパス
+```
+name : VST3SDK_DIR
+value : "VST3 SDK"を展開したディレクトリパス
+```
 * VisualStudioを起動しソリューションをビルド
 
 ## License
-MIT
+[MIT](https://github.com/Nocorupe/SimpleFxVst/blob/master/LICENSE)
 
