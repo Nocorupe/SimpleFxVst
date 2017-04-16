@@ -1,8 +1,4 @@
-﻿//
-//  The MIT License(MIT)
-//
-//  Copyright(c) 2016 Nocorupe
-//
+﻿
 #pragma once
 
 #include "SfxParamProperties.h"
